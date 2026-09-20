@@ -7,8 +7,8 @@ import { SignInModal } from './SignInModal';
 interface NavBarProps {
   cartItemCount?: number;
   onOpenCart?: () => void;
-  activeView: 'store' | 'fetch-demo';
-  onSelectView: (view: 'store' | 'fetch-demo') => void;
+  activeView: 'store' | 'debounce-demo' | 'fetch-demo';
+  onSelectView: (view: 'store' | 'debounce-demo' | 'fetch-demo') => void;
 }
 
 export function NavBar({ cartItemCount = 0, onOpenCart, activeView, onSelectView }: NavBarProps) {
@@ -42,6 +42,15 @@ export function NavBar({ cartItemCount = 0, onOpenCart, activeView, onSelectView
                 onClick={() => onSelectView('store')}
               >
                 Store & Cart
+              </button>
+              <button
+                type="button"
+                id="nav-debounce-demo-link"
+                className={`tab-btn ${activeView === 'debounce-demo' ? 'active' : ''}`}
+                style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                onClick={() => onSelectView('debounce-demo')}
+              >
+                useDebounce & Coupon Form
               </button>
               <button
                 type="button"

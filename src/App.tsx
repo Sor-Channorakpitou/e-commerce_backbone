@@ -7,6 +7,8 @@ import { ProductCard } from './components/ProductCard';
 import { CartList } from './components/CartList';
 import { CheckoutSummary } from './components/CheckoutSummary';
 import { FetchDemo } from './components/FetchDemo';
+import { DebounceSearchDemo } from './components/DebounceSearchDemo';
+import { DiscountCouponForm } from './components/DiscountCouponForm';
 import { INITIAL_PRODUCTS } from './data/products';
 import { ShoppingCart, ShieldCheck, Check, Sparkles } from 'lucide-react';
 
@@ -16,7 +18,7 @@ import { ShoppingCart, ShieldCheck, Check, Sparkles } from 'lucide-react';
  */
 function StoreContent() {
   const { totalQuantity } = useCart();
-  const [activeView, setActiveView] = useState<'store' | 'fetch-demo'>('store');
+  const [activeView, setActiveView] = useState<'store' | 'debounce-demo' | 'fetch-demo'>('store');
 
   return (
     <div className="app-container">
@@ -37,19 +39,19 @@ function StoreContent() {
 
           <div className="arch-pills">
             <span className="arch-pill active">
-              <Check size={12} /> Generic useFetch&lt;T&gt; (Zero any)
+              <Check size={12} /> useLocalStorage (Theme & Cart)
             </span>
             <span className="arch-pill active">
-              <Check size={12} /> AuthContext (Hand-Crafted)
+              <Check size={12} /> useDebounce (500ms Delay)
+            </span>
+            <span className="arch-pill active">
+              <Check size={12} /> Vitest + RTL (User Queries)
             </span>
             <span className="arch-pill active">
               <Check size={12} /> Pure Cart useReducer
             </span>
             <span className="arch-pill active">
-              <Check size={12} /> Discriminated Union Actions
-            </span>
-            <span className="arch-pill active">
-              <Check size={12} /> Zero Prop-Drilling Summary
+              <Check size={12} /> Generic useFetch&lt;T&gt;
             </span>
           </div>
         </div>
@@ -98,6 +100,13 @@ function StoreContent() {
 
               {/* Checkout Summary Box receives NO PROPS carrying cart data */}
               <CheckoutSummary />
+            </aside>
+          </div>
+        ) : activeView === 'debounce-demo' ? (
+          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(320px, 1fr)', gap: '2rem', alignItems: 'start' }}>
+            <DebounceSearchDemo />
+            <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'sticky', top: '90px' }}>
+              <DiscountCouponForm />
             </aside>
           </div>
         ) : (

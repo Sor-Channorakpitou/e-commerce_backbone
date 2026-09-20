@@ -1,4 +1,5 @@
-import { createContext, useContext, useReducer, type ReactNode } from 'react';
+import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { CartState, CartAction, CartContextType, CartItem } from '../types';
 
 /**
@@ -99,9 +100,20 @@ const DEFAULT_INITIAL_STATE: CartState = {
   items: [],
 };
 
-// Hand-written CartProvider wrapping useReducer
+// Hand-written CartProvider wrapping useReducer with useLocalStorage persistence
 export function CartProvider({ children, initialState = DEFAULT_INITIAL_STATE }: CartProviderProps) {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [persistedItems, setPersistedItems] = useLocalStorage<CartItem[]>('shopping-cart-items', () => {
+    return initialState.items.length > 0 ? initialState.items : [];
+  });
+
+  const [state, dispatch] = useReducer(cartReducer, {
+    items: initialState.items.length > 0 ? initialState.items : persistedItems,
+  });
+
+  // Sync reducer state back to localStorage
+  useEffect(() => {
+    setPersistedItems(state.items);
+  }, [state.items, setPersistedItems]);
 
   // Pure derived state computations (memoized per render cycle)
   const totalQuantity = state.items.reduce((sum, item) => sum + item.quantity, 0);
