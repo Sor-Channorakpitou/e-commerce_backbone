@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { ShoppingBag, LogIn, LogOut, Layers } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { ShoppingBag, LogIn, LogOut, Layers, Sun, Moon } from 'lucide-react';
 import { SignInModal } from './SignInModal';
 
 interface NavBarProps {
@@ -12,6 +13,7 @@ interface NavBarProps {
 
 export function NavBar({ cartItemCount = 0, onOpenCart, activeView, onSelectView }: NavBarProps) {
   const { user, isAuthenticated, signOut } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -53,8 +55,20 @@ export function NavBar({ cartItemCount = 0, onOpenCart, activeView, onSelectView
             </nav>
           </div>
 
-          {/* Right Actions: Cart & Auth */}
+          {/* Right Actions: Theme Toggle, Cart & Auth */}
           <div className="nav-actions">
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              className="theme-toggle-btn"
+              id="theme-toggle-btn"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            </button>
+
             {/* Cart Button */}
             <button
               type="button"
