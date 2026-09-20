@@ -95,6 +95,3 @@ describe('cartReducer Suite', () => {
   });
 });
 
-export function runCartReducerTests(): { passed: boolean; logs: string[] } {
-  return { passed: true, logs: ['All 8 cartReducer tests verified via Vitest.'] };
-}

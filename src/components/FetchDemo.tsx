@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useFetch } from '../hooks/useFetch';
 import type { User } from '../types';
-import { runCartReducerTests } from '../context/CartContext.test';
+import { runCartReducerTests } from '../utils/cartReducerAudit';
 import { Code2, CheckCircle, AlertCircle, RefreshCw, Terminal } from 'lucide-react';
 
 export function FetchDemo() {
